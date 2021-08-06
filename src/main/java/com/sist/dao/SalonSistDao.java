@@ -2,6 +2,7 @@ package com.sist.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -111,6 +112,40 @@ public class SalonSistDao {
 			System.out.println("예외발생:" + e.getMessage());
 		}
 		return list;
+	}
+	
+	//예약 취소 메소드
+	public int deleteBooking(int booker_num) {
+		int re = -1;
+		String sql = "delete from booking where booker_num=?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String url = "jdbc:oracle:thin:@localhost:1521:XE";
+		String user = "c##madang";
+		String pwd = "madang";
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(url, user, pwd);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, booker_num);	
+			re = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("예외발생:" + e.getMessage());
+		}finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		return re;
 	}
 	
 }

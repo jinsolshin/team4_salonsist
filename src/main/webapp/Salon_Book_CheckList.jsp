@@ -14,23 +14,26 @@
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 
 <script type="text/javascript">
-	$(function() {
-		$(".btn").click(function() {
-			confirm("정말 취소하시겠습니까?");
-		});
-	});
+function confirmDelete(booker_num){
+	var re = confirm("정말로 삭제하시겠습니까?");
+	if(re == true){
+		location.href = "deleteBooking.do?booker_num="+booker_num;
+	}else{
+		return;
+	}
+}
+
 </script>
 </head>
 <body>
 	<jsp:include page="Salon_Header.jsp"/>
 	
 	<%
+		SalonSistDao dao = SalonSistDao.getInstance();
 		String booker_pwd = request.getParameter("booker_pwd");
 		String booker_name = request.getParameter("booker_name");
 		String booker_phone = request.getParameter("booker_phone");
-		SalonSistDao dao = SalonSistDao.getInstance();
-		ArrayList<SalonSistVo> list = dao.find(booker_pwd, booker_name, booker_phone);
-		
+		ArrayList<SalonSistVo> list = dao.find(booker_pwd, booker_name, booker_phone);	
 	%>
 	
 	<div class="content text-center pt-3 pb-3">
@@ -60,6 +63,7 @@
 								<td><%=v.getStyle_name() %></td>
 								<td><%=v.getStyle_detail_name() %></td>
 								<td><%=v.getD_name() %></td>
+								<td><a href="#" onclick="confirmDelete(<%=v.getBooker_num()%>)">삭제</a></td>
 							</tr>
 							<%
 						}
