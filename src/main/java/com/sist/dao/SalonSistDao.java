@@ -113,7 +113,7 @@ public class SalonSistDao {
 		return list;
 	}
 	
-	// 이름을 전달받아 DB에 있는 예약자인지 판별하는 메소드
+	// 예약자명을 전달받아 DB에 있는 예약자인지 판별하는 메소드
 	public boolean isCorrectName(String booker_name) {
 		boolean flag = false;
 		String sql = "select * from booking where booker_name=?";
