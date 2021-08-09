@@ -38,7 +38,7 @@ public class SalonSistDao {
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
 				cnt = rs.getInt(1);
-		        System.out.println("행의 개수: "+cnt);
+		        System.out.println("행의 개수: " + cnt);
 			}
 		} catch (Exception e) {
 			System.out.println("예외발생: " + e.getMessage());
@@ -89,7 +89,7 @@ public class SalonSistDao {
 	}
 	
 	//예약 조회 메소드
-	public ArrayList<SalonSistVo> find(String booker_pwd, String booker_name, String booker_phone) {
+	public ArrayList<SalonSistVo> find(int booker_pwd, String booker_name, String booker_phone) {
 		ArrayList<SalonSistVo> list = new ArrayList<SalonSistVo>();
 		
 		String sql = "select booker_num, booker_date, booker_time, style_name, style_detail_name, d_name "
@@ -99,7 +99,7 @@ public class SalonSistDao {
 		try {
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, booker_pwd);
+			pstmt.setInt(1, booker_pwd);
 			pstmt.setString(2, booker_name);
 			pstmt.setString(3, booker_phone);
 			ResultSet rs = pstmt.executeQuery();
@@ -108,10 +108,69 @@ public class SalonSistDao {
 			}
 			ConnectionProvider.close(conn, pstmt, rs);
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println("예외발생:" + e.getMessage());
 		}
 		return list;
+	}
+	
+	// 이름을 전달받아 DB에 있는 예약자인지 판별하는 메소드
+	public boolean isCorrectName(String booker_name) {
+		boolean flag = false;
+		String sql = "select * from booking where booker_name=?";
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, booker_name);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				flag = true;
+			}
+			System.out.println("name flag: " + flag);
+			ConnectionProvider.close(conn, pstmt, rs);
+		}catch(Exception e) {
+			System.out.println("예외 발생: " + e.getMessage());
+		}
+		return flag;
+	}
+	
+	// 연락처를 전달받아 DB에 있는 연락처인지 판별하는 메소드
+	public boolean isCorrectPhone(String booker_phone) {
+		boolean flag = false;
+		String sql = "select * from booking where booker_phone=?";
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, booker_phone);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				flag = true;
+			}
+			System.out.println("phone flag: " + flag);
+			ConnectionProvider.close(conn, pstmt, rs);
+		}catch(Exception e) {
+			System.out.println("예외 발생: " + e.getMessage());
+		}
+		return flag;
+	}
+	
+	// 비밀번호와 연락처를 전달받아 DB에 있는 비밀번호인지 판별하는 메소드
+	public boolean isCorrectPwd(int booker_pwd) {
+		boolean flag = false;
+		String sql = "select * from booking where booker_pwd=?";
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, booker_pwd);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				flag = true;
+			}
+			System.out.println("pwd flag: " + flag);
+			ConnectionProvider.close(conn, pstmt, rs);
+		}catch(Exception e) {
+			System.out.println("예외 발생: " + e.getMessage());
+		}
+		return flag;
 	}
 	
 	//예약 취소 메소드
