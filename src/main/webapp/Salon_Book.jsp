@@ -41,6 +41,13 @@
 	    	booker_detail.options[j] = new Option(dText[j], dVal[j]);
 	    }
 	}
+	
+	// input Number의 경우에 MaxLength가 적용되지 않는데, 4자리까지만 비밀번호를 받기 위한 함수
+	function maxLengthCheck(object){
+	    if(object.value.length > object.maxLength){
+	      object.value = object.value.slice(0, object.maxLength);
+	    }    
+	}
 </script>
 </head>
 <body>
@@ -54,22 +61,22 @@
 					<hr>
 					<div class="form-group text-start">
 				    	<label for="booker_name" class="form-label mt-4">Name</label>
-				    	<input type="text" class="form-control" id="booker_name" name="booker_name" aria-describedby="booker_name_help" placeholder="Enter Name">
+				    	<input type="text" required="required" class="form-control" id="booker_name" name="booker_name" aria-describedby="booker_name_help" placeholder="Enter Name">
 				    	<small id="booker_name_help" class="form-text text-muted">이름을 입력해주세요.</small>
 					</div>
 					<div class="form-group text-start">
 				    	<label for="booker_phone" class="form-label mt-4">Phone</label>
-				    	<input type="text" class="form-control" id="booker_phone" name="booker_phone" aria-describedby="booker_phone_help" placeholder="Enter Phone Number">
+				    	<input type="text" required="required" class="form-control" id="booker_phone" name="booker_phone" aria-describedby="booker_phone_help" placeholder="Enter Phone Number">
 				    	<small id="booker_phone_help" class="form-text text-muted">연락처('-' 제외)를 입력해주세요.</small>
 					</div>
 					<div class="form-group text-start">
 				    	<label for="booker_pwd" class="form-label mt-4">Password</label>
-				    	<input type="password" class="form-control" id="booker_pwd" name="booker_pwd" aria-describedby="booker_pwd_help" placeholder="Enter Password">
+				    	<input type="number" required="required" maxlength="4" oninput="maxLengthCheck(this)" class="form-control" id="booker_pwd" name="booker_pwd" aria-describedby="booker_pwd_help" placeholder="Enter Password" style="-webkit-text-security: disc;">
 				    	<small id="booker_pwd_help" class="form-text text-muted">예약 비밀번호(숫자 4자리)를 입력해주세요.</small>
 					</div>
 					<div class="form-group text-start">
 				    	<label for="booker_date" class="form-label mt-4">Date</label>
-				    	<input type="date" class="form-control" id="booker_date" name="booker_date" aria-describedby="booker_date_help" placeholder="Enter Date">
+				    	<input type="date" required="required" class="form-control" id="booker_date" name="booker_date" aria-describedby="booker_date_help" placeholder="Enter Date">
 				    	<small id="booker_date_help" class="form-text text-muted">예약 날짜를 선택해주세요.</small>
 					</div>
 					<div class="form-group text-start">
