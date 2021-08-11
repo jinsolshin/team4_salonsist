@@ -66,7 +66,7 @@
 					</div>
 					<div class="form-group text-start">
 				    	<label for="booker_phone" class="form-label mt-4">Phone</label>
-				    	<input type="text" required="required" class="form-control" id="booker_phone" name="booker_phone" aria-describedby="booker_phone_help" placeholder="Enter Phone Number">
+				    	<input type="number" value="010" required="required" maxlength="11" oninput="maxLengthCheck(this)" class="form-control" id="booker_phone" name="booker_phone" aria-describedby="booker_phone_help" placeholder="Enter Phone Number">
 				    	<small id="booker_phone_help" class="form-text text-muted">연락처('-' 제외)를 입력해주세요.</small>
 					</div>
 					<div class="form-group text-start">
